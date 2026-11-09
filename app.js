@@ -48,7 +48,7 @@ function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem("pastel-theme", theme);
   const toggle = $("#theme-toggle");
-  if (toggle) { toggle.textContent = theme === "dark" ? "Modo claro" : "Modo escuro"; toggle.setAttribute("aria-label", theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"); }
+  if (toggle) { toggle.textContent = theme === "dark" ? "☀" : "☾"; toggle.setAttribute("aria-label", theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"); toggle.setAttribute("title", theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"); }
 }
 
 function initTheme() {
