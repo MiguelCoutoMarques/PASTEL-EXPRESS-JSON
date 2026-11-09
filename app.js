@@ -1,12 +1,12 @@
 const produtos = [
-  { id: 1, nome: "Pastel de queijo", categoria: "pastel", descricao: "Queijo derretido e massa crocante.", preco: 8.5, arte: "art-queijo", emoji: "🥟" },
-  { id: 2, nome: "Pastel de carne", categoria: "pastel", descricao: "Carne temperada no ponto certo.", preco: 9.5, arte: "art-carne", emoji: "🥟" },
-  { id: 3, nome: "Pastel de frango", categoria: "pastel", descricao: "Frango cremoso com tempero da casa.", preco: 9.5, arte: "art-frango", emoji: "🥟" },
-  { id: 4, nome: "Pastel especial", categoria: "pastel", descricao: "Queijo, carne e um toque especial.", preco: 12.5, arte: "art-pastel", emoji: "🥟" },
-  { id: 5, nome: "Coca-Cola lata", categoria: "bebida", descricao: "Lata gelada de 350 ml.", preco: 6, arte: "art-coca", emoji: "🥤" },
-  { id: 6, nome: "Suco de laranja", categoria: "bebida", descricao: "Suco natural e bem geladinho.", preco: 7, arte: "art-suco", emoji: "🍊" },
-  { id: 7, nome: "Guaraná lata", categoria: "bebida", descricao: "Lata gelada de 350 ml.", preco: 5.5, arte: "art-guarana", emoji: "🥤" },
-  { id: 8, nome: "Água mineral", categoria: "bebida", descricao: "Água mineral sem gás, 500 ml.", preco: 3.5, arte: "art-agua", emoji: "💧" }
+  { id: 1, nome: "Pastel de queijo", categoria: "pastel", descricao: "Queijo derretido e massa crocante.", preco: 8.5, arte: "art-queijo", imagem: "assets/products/pastel-queijo.png" },
+  { id: 2, nome: "Pastel de carne", categoria: "pastel", descricao: "Carne temperada no ponto certo.", preco: 9.5, arte: "art-carne", imagem: "assets/products/pastel-carne.png" },
+  { id: 3, nome: "Pastel de frango", categoria: "pastel", descricao: "Frango cremoso com tempero da casa.", preco: 9.5, arte: "art-frango", imagem: "assets/products/pastel-frango.png" },
+  { id: 4, nome: "Pastel especial", categoria: "pastel", descricao: "Queijo, carne e um toque especial.", preco: 12.5, arte: "art-pastel", imagem: "assets/products/pastel-especial.png" },
+  { id: 5, nome: "Coca-Cola lata", categoria: "bebida", descricao: "Lata gelada de 350 ml.", preco: 6, arte: "art-coca", imagem: "assets/products/coca-cola.png" },
+  { id: 6, nome: "Suco de laranja", categoria: "bebida", descricao: "Suco natural e bem geladinho.", preco: 7, arte: "art-suco", imagem: "assets/products/suco-laranja.png" },
+  { id: 7, nome: "Guaraná lata", categoria: "bebida", descricao: "Lata gelada de 350 ml.", preco: 5.5, arte: "art-guarana", imagem: "assets/products/guarana.png" },
+  { id: 8, nome: "Água mineral", categoria: "bebida", descricao: "Água mineral sem gás, 500 ml.", preco: 3.5, arte: "art-agua", imagem: "assets/products/agua-mineral.png" }
 ];
 
 const $ = (selector, scope = document) => scope.querySelector(selector);
@@ -48,7 +48,7 @@ function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   localStorage.setItem("pastel-theme", theme);
   const toggle = $("#theme-toggle");
-  if (toggle) toggle.setAttribute("aria-label", theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro");
+  if (toggle) { toggle.textContent = theme === "dark" ? "Modo claro" : "Modo escuro"; toggle.setAttribute("aria-label", theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"); }
 }
 
 function initTheme() {
@@ -136,7 +136,7 @@ function fillUserForm(user, form) {
 }
 
 function productCard(product) {
-  return `<article class="product-card"><div class="product-visual ${product.arte}" aria-label="Ilustração de ${product.nome}">${product.emoji}</div><div class="product-info"><h3>${product.nome}</h3><p>${product.descricao}</p><div class="product-bottom"><span class="price">${money(product.preco)}</span><button class="btn btn-primary btn-small" data-add-product="${product.id}">Adicionar</button></div></div></article>`;
+  return `<article class="product-card"><div class="product-visual ${product.arte}"><img class="product-image" src="${product.imagem}" alt="${product.nome}" loading="lazy"></div><div class="product-info"><h3>${product.nome}</h3><p>${product.descricao}</p><div class="product-bottom"><span class="price">${money(product.preco)}</span><button class="btn btn-primary btn-small" data-add-product="${product.id}">Adicionar</button></div></div></article>`;
 }
 
 function addToCart(id) {
@@ -172,7 +172,7 @@ function initCart() {
   if (!list) return;
   const render = () => {
     const items = cartDetails();
-    list.innerHTML = items.length ? items.map(({ product, quantidade }) => `<article class="cart-item"><div class="cart-thumb ${product.arte}">${product.emoji}</div><div><h3>${product.nome}</h3><p>${money(product.preco)} cada</p><div class="quantity"><button data-minus="${product.id}" aria-label="Diminuir">−</button><strong>${quantidade}</strong><button data-plus="${product.id}" aria-label="Aumentar">+</button></div></div><div class="cart-actions"><strong class="price">${money(product.preco * quantidade)}</strong><button class="remove-link" data-remove="${product.id}">Remover</button></div></article>`).join("") : '<div class="empty-state">Seu carrinho ainda está vazio.<br><a class="text-link" href="produtos.html">Ver cardápio</a></div>';
+    list.innerHTML = items.length ? items.map(({ product, quantidade }) => `<article class="cart-item"><div class="cart-thumb ${product.arte}"><img class="cart-product-image" src="${product.imagem}" alt="${product.nome}"></div><div><h3>${product.nome}</h3><p>${money(product.preco)} cada</p><div class="quantity"><button data-minus="${product.id}" aria-label="Diminuir">−</button><strong>${quantidade}</strong><button data-plus="${product.id}" aria-label="Aumentar">+</button></div></div><div class="cart-actions"><strong class="price">${money(product.preco * quantidade)}</strong><button class="remove-link" data-remove="${product.id}">Remover</button></div></article>`).join("") : '<div class="empty-state">Seu carrinho ainda está vazio.<br><a class="text-link" href="produtos.html">Ver cardápio</a></div>';
     const total = items.reduce((sum, item) => sum + item.product.preco * item.quantidade, 0);
     $("#cart-subtotal").textContent = money(total);
     $("#cart-total").textContent = money(total);
